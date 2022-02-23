@@ -1,23 +1,24 @@
-function getRandomArbitrary(min, max) {
-  if (min >= max && max || min > 0) {
-    return Math.random() * (min - max) + max;
+const getRandomIntInclusive = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
 
-  } else if (max >= min && max || min > 0) {
-    return Math.random() * (max - min) + min;
+  if ((min || max) < 0) {
+    return 'Число должно быть больше 0';
+  } else if (max <= min) {
+    return Math.floor(Math.random() * (min - max + 1)) + max;
   }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-  return 'Число должно быть больше 0';
-}
+getRandomIntInclusive(10, 1);
 
-getRandomArbitrary(1, 10);
-
-function findLongestWord(str, maxLength) {
+const findLongestWord = (str, maxLength) => {
   if (str.length <= maxLength) {
-    console.log('Верно');
-  } else {
-    console.log('Не верно');
+    return true;
   }
-}
 
-findLongestWord('The quick brown fox jumped over the lazy dog', 10);
+  return false;
+};
+
+findLongestWord('The quick brown fox jumped over the lazy dog', 100);
 
