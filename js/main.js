@@ -22,14 +22,14 @@ const findLongestWord = (str, maxLength) => {
 
 findLongestWord('The quick brown fox jumped over the lazy dog', 100);
 
-const TITLES = [
+const titles = [
   'Замечательное селфи',
   'Вид на Спас-На-Крови',
   'Прогулка в центре города',
   'Летний сад осенью',
 ];
 
-const MESSAGE = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -38,7 +38,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const AUTHOR_NAME = [
+const names = [
   'Дмитрий',
   'Степан',
   'Иннокентий',
@@ -48,22 +48,34 @@ const AUTHOR_NAME = [
   'Симеон',
 ];
 
-const createObject = () => {
+const createObject = (index) => {
+  const commentsCount = getRandomIntInclusive(1, 5);
 
+  const getComment = (idx) => ({
+    id: idx,
+    avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
+    message: messages[getRandomIntInclusive(0, 5)],
+    name: names[getRandomIntInclusive(0, 6)],
+  });
+
+  const getComments = () => {
+
+    const generateMessages = [];
+
+    for (let i = 1; i <= commentsCount; i++) {
+      const objectMessage = getComment(i);
+      generateMessages.push(objectMessage);
+    }
+
+    return generateMessages;
+  };
 
   const objectTemplate = {
-    id: getRandomIntInclusive(1, 25),
-    url: `photos/${getRandomIntInclusive(1, 25)}.jpg`,
-    description: TITLES[getRandomIntInclusive(0, 3)],
+    id: index,
+    url: `photos/${index}.jpg`,
+    description: titles[getRandomIntInclusive(0, 3)],
     likes: getRandomIntInclusive(15, 200),
-    comments: [
-      {
-        id: getRandomIntInclusive(1, 2500),
-        avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-        message: MESSAGE[getRandomIntInclusive(0, 5)],
-        name: AUTHOR_NAME[getRandomIntInclusive(0, 6)],
-      }
-    ],
+    comments: getComments(getRandomIntInclusive(1, 5))
   };
 
   return objectTemplate;
@@ -72,7 +84,8 @@ const createObject = () => {
 const objects = [];
 
 for (let i = 1; i <= 25; i++) {
-  const newObject = createObject();
+  const newObject = createObject(i);
   objects.push(newObject);
 }
 
+console.log(objects);
