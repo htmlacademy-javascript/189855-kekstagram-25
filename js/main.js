@@ -51,23 +51,39 @@ const names = [
 const createObject = (index) => {
   const commentsCount = getRandomIntInclusive(1, 5);
 
-  const getComment = (idx) => ({
-    id: idx,
-    avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-    message: messages[getRandomIntInclusive(0, 5)],
-    name: names[getRandomIntInclusive(0, 6)],
-  });
+  const getComment = (idx) => {
+    const messageCount = getRandomIntInclusive(1, 2);
+
+    const getMessage = () => {
+
+      const joinedMessages = [];
+
+      for (let i = 1; i <= messageCount; i++) {
+        const objectMessage = messages(i).join(' ,');
+        joinedMessages.push(objectMessage);
+      }
+
+      return joinedMessages;
+    };
+
+    return {
+      id: idx,
+      avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
+      message: getMessage,
+      name: names[getRandomIntInclusive(0, 6)],
+    };
+  };
 
   const getComments = () => {
 
-    const generateMessages = [];
+    const setMessages = [];
 
     for (let i = 1; i <= commentsCount; i++) {
       const objectMessage = getComment(i);
-      generateMessages.push(objectMessage);
+      setMessages.push(objectMessage);
     }
 
-    return generateMessages;
+    return setMessages;
   };
 
   const objectTemplate = {
