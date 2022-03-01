@@ -59,17 +59,20 @@ const createObject = (index) => {
       const joinedMessages = [];
 
       for (let i = 1; i <= messageCount; i++) {
-        const objectMessage = messages(i).join(' ,');
+        const messageVariates = getRandomIntInclusive(0, 5);
+        const objectMessage = messages[messageVariates];
         joinedMessages.push(objectMessage);
       }
 
-      return joinedMessages;
+      const joinMessage = joinedMessages.join(' ');
+
+      return joinMessage;
     };
 
     return {
       id: idx,
       avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-      message: getMessage,
+      message: getMessage(),
       name: names[getRandomIntInclusive(0, 6)],
     };
   };
@@ -104,4 +107,3 @@ for (let i = 1; i <= 25; i++) {
   objects.push(newObject);
 }
 
-console.log(objects);
