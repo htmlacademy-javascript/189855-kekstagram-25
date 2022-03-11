@@ -1,4 +1,5 @@
 import { createObject } from './create-object.js';
+import './rendering-mini.js';
 
 const objects = [];
 const maxNumberDescriptions = 25;
