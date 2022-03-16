@@ -1,7 +1,7 @@
 import { getRandomIntInclusive } from './util.js';
 import {titles, messages, names} from './data.js';
 
-const createObject = (index) => {
+const createDescription = (index) => {
   const commentsCount = getRandomIntInclusive(1, 5);
 
   const getComment = (idx) => {
@@ -53,4 +53,4 @@ const createObject = (index) => {
   return objectTemplate;
 };
 
-export {createObject};
+export {createDescription};
