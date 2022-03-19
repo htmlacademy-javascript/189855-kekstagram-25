@@ -1,25 +1,11 @@
 import {renderMini, descriptionObjects} from './rendering-mini.js';
-import {showUploadFile, addUploadCancel} from './form-validation.js';
+import {addFormValidation} from './form-validation.js';
+import {showUploadFile, addUploadCancel} from './show-popup.js';
 
 renderMini(descriptionObjects);
 showUploadFile();
 addUploadCancel();
+addFormValidation();
 
-const form = document.querySelector('.img-upload__overlay');
+//const re = /^#[A-Za-zA-Яа-яЁё0-9]{1,19}$/;
 
-const pristine = new Pristine(form);
-
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Форма валидна');
-  } else {
-    console.log('Форма невалидна');
-  }
-});
-
-const re = /^#[A-Za-zA-Яа-яЁё0-9]{1,19}$/;
-
-console.log(re.test('#grow'));

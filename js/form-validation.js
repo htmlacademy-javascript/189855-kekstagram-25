@@ -1,30 +1,23 @@
-import { isEscapeKey } from './util.js';
+const form = document.querySelector('.img-upload__form');
 
-const uploadFile = document.querySelector('#upload-file');
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
-const uploadCancel = document.querySelector('#upload-cancel');
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__text',
+  errorTextParent: 'img-upload__text',
+  errorTextClass: 'img-upload__error-text',
+});
 
-const showUploadFile = () => {
-  uploadFile.addEventListener('change', () => {
-    imgUploadOverlay.classList.remove('hidden');
-    body.classList.add('modal-open');
+const addFormValidation = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-    document.addEventListener('keydown', (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        imgUploadOverlay.classList.add('hidden');
-        body.classList.remove('modal-open');
-      }
-    });
+    const imgUploadSubmit = form.querySelector('.img-upload__submit');
+    const isValid = pristine.validate();
+    if (isValid) {
+      imgUploadSubmit.disabled = true;
+    } else {
+      imgUploadSubmit.disabled = false;
+    }
   });
 };
 
-const addUploadCancel = () => {
-  uploadCancel.addEventListener('click', () => {
-    imgUploadOverlay.classList.add('hidden');
-    body.classList.remove('modal-open');
-  });
-};
-
-export {showUploadFile, addUploadCancel};
+export {addFormValidation};
