@@ -1403,3 +1403,7 @@ main {
 .hidden {
   display: none;
 }
+
+.text-help {
+  color: #ca1d47;
+}
