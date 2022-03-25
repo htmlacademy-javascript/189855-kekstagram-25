@@ -1,4 +1,5 @@
 import {createDescription} from './create-description.js';
+import { openBigPicture } from './full-image.js';
 
 const photoMatchingTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesListElement = document.querySelector('.pictures');
@@ -12,6 +13,10 @@ const renderMini = (photos) => {
     photoMatchingElement.querySelector('.picture__likes').textContent = likes;
     photoMatchingElement.querySelector('.picture__comments').textContent = comments.length;
     photoMatchingListFragment.appendChild(photoMatchingElement);
+
+    photoMatchingElement.addEventListener('click', () => {
+      openBigPicture(photos);
+    });
   });
 
   picturesListElement.appendChild(photoMatchingListFragment);
