@@ -7,7 +7,8 @@ const picturesListElement = document.querySelector('.pictures');
 const renderMini = (photos) => {
   const photoMatchingListFragment = document.createDocumentFragment();
 
-  photos.forEach(({url, likes, comments}) => {
+  photos.forEach((photo) => {
+    const {url, likes, comments} = photo;
     const photoMatchingElement = photoMatchingTemplate.cloneNode(true);
     photoMatchingElement.querySelector('.picture__img').src = url;
     photoMatchingElement.querySelector('.picture__likes').textContent = likes;
@@ -15,7 +16,7 @@ const renderMini = (photos) => {
     photoMatchingListFragment.appendChild(photoMatchingElement);
 
     photoMatchingElement.addEventListener('click', () => {
-      openBigPicture(photos);
+      openBigPicture(photo);
     });
   });
 

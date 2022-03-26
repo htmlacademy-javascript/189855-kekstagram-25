@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = bigPicture.querySelector('.big-picture__img');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const likesCount = bigPicture.querySelector('.likes-count');
 const commentsCount = bigPicture.querySelector('.comments-count');
 const socialComments = bigPicture.querySelector('.social__comments');
@@ -10,10 +10,11 @@ const blockCommentCount = bigPicture.querySelector('.social__comment-count');
 const blockUploadingNewComments = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-
+const socialComment = document.querySelector('#comment').content.querySelector('.social__comment');
 
 const getBigPictureComment = (comment) => {
-  const commentItem = socialComments.cloneNode(true);
+  const commentItem = socialComment.cloneNode(true);
+
   commentItem.querySelector('.social__picture').src = comment.avatar;
   commentItem.querySelector('.social__picture').alt = comment.name;
   commentItem.querySelector('.social__text').textContent = comment.message;
@@ -21,6 +22,8 @@ const getBigPictureComment = (comment) => {
 };
 
 const createCommentsFragment = (fragmentsComment) => {
+  socialComments.innerHTML = '';
+
   const fragment = document.createDocumentFragment();
   fragmentsComment.forEach((comment) => {
     const newComment = getBigPictureComment(comment);
@@ -32,13 +35,16 @@ const createCommentsFragment = (fragmentsComment) => {
 const openBigPicture = (bigImage) => {
   body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
-  bigPictureImg.querySelector(bigPictureImg).src = bigImage.url;
-  bigPicture.querySelector(likesCount).textContent = bigImage.likes;
-  bigPicture.querySelector(commentsCount).textContent = bigImage.comments.length;
-  bigPicture.querySelector(socialDescription).textContent = bigImage.description;
-  createCommentsFragment(bigImage.comments);
   blockCommentCount.classList.add('hidden');
   blockUploadingNewComments.classList.add('hidden');
+
+  bigPictureImg.src = bigImage.url;
+  likesCount.textContent = bigImage.likes;
+  commentsCount.textContent = bigImage.comments.length;
+  socialDescription.textContent = bigImage.description;
+
+  createCommentsFragment(bigImage.comments);
+
   document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureCancel.addEventListener('click', onBigPictureCancelClick);
 };
