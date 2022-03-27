@@ -29,14 +29,29 @@ const createCommentsFragment = (fragmentsComment) => {
     const newComment = getBigPictureComment(comment);
     fragment.appendChild(newComment);
   });
+
   socialComments.appendChild(fragment);
+};
+
+const showNewComments = (fragmentsNewComments) => {
+  blockUploadingNewComments.addEventListener('click', () => {
+    socialComments.innerHTML = '';
+
+    const fragment = document.createDocumentFragment();
+    fragmentsNewComments.forEach((comment) => {
+      const newComment = getBigPictureComment(comment);
+      fragment.appendChild(newComment);
+    });
+
+    socialComments.appendChild(fragment);
+  });
 };
 
 const openBigPicture = (bigImage) => {
   body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
-  blockCommentCount.classList.add('hidden');
-  blockUploadingNewComments.classList.add('hidden');
+  blockCommentCount.classList.remove('hidden');
+  blockUploadingNewComments.classList.remove('hidden');
 
   bigPictureImg.src = bigImage.url;
   likesCount.textContent = bigImage.likes;
@@ -44,6 +59,7 @@ const openBigPicture = (bigImage) => {
   socialDescription.textContent = bigImage.description;
 
   createCommentsFragment(bigImage.comments);
+  showNewComments(bigImage.comments);
 
   document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureCancel.addEventListener('click', onBigPictureCancelClick);
