@@ -27,7 +27,7 @@ const getBigPictureComment = (comment) => {
 
 const createCommentsFragment = (fragmentsComment, counter) => {
   const currentComments = fragmentsComment.slice(counter, counter + OFFSET);
-  let countNodeValue = blockCommentCount.childNodes[0].nodeValue;
+  const countNodeValue = blockCommentCount.childNodes[0];
 
   currentCommentsCount += currentComments.length;
 
@@ -35,13 +35,13 @@ const createCommentsFragment = (fragmentsComment, counter) => {
     blockUploadingNewComments.classList.add('hidden');
   }
 
-  const index = countNodeValue.indexOf('из');
-  const substring = countNodeValue.slice(index);
+  const index = countNodeValue.nodeValue.indexOf('из');
+  const substring = countNodeValue.nodeValue.slice(index);
 
-  countNodeValue = `${currentCommentsCount} ${substring}`;
+  countNodeValue.nodeValue = `${currentCommentsCount} ${substring}`;
 
   const fragment = document.createDocumentFragment();
-  fragmentsComment.forEach((comment) => {
+  currentComments.forEach((comment) => {
     const newComment = getBigPictureComment(comment);
     fragment.appendChild(newComment);
   });
@@ -91,6 +91,8 @@ function closeBigPicture() {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscPress);
   bigPictureCancel.removeEventListener('click', onBigPictureCancelClick);
+  currentCommentsCount = 0;
+  blockUploadingNewComments.classList.remove('hidden');
 }
 
 export {openBigPicture};
