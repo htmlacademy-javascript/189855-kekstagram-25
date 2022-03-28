@@ -12,6 +12,10 @@ const body = document.querySelector('body');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const socialComment = document.querySelector('#comment').content.querySelector('.social__comment');
 
+const OFFSET = 5;
+
+let currentCommentsCount = 0;
+
 const getBigPictureComment = (comment) => {
   const commentItem = socialComment.cloneNode(true);
 
@@ -21,8 +25,20 @@ const getBigPictureComment = (comment) => {
   return commentItem;
 };
 
-const createCommentsFragment = (fragmentsComment) => {
-  socialComments.innerHTML = '';
+const createCommentsFragment = (fragmentsComment, counter) => {
+  const currentComments = fragmentsComment.slice(counter, counter + OFFSET);
+  let countNodeValue = blockCommentCount.childNodes[0].nodeValue;
+
+  currentCommentsCount += currentComments.length;
+
+  if (currentCommentsCount === fragmentsComment.length) {
+    blockUploadingNewComments.classList.add('hidden');
+  }
+
+  const index = countNodeValue.indexOf('из');
+  const substring = countNodeValue.slice(index);
+
+  countNodeValue = `${currentCommentsCount} ${substring}`;
 
   const fragment = document.createDocumentFragment();
   fragmentsComment.forEach((comment) => {
@@ -33,36 +49,30 @@ const createCommentsFragment = (fragmentsComment) => {
   socialComments.appendChild(fragment);
 };
 
-const showNewComments = (fragmentsNewComments) => {
-  blockUploadingNewComments.addEventListener('click', () => {
-    socialComments.innerHTML = '';
-
-    const fragment = document.createDocumentFragment();
-    fragmentsNewComments.forEach((comment) => {
-      const newComment = getBigPictureComment(comment);
-      fragment.appendChild(newComment);
-    });
-
-    socialComments.appendChild(fragment);
-  });
-};
-
 const openBigPicture = (bigImage) => {
   body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
-  blockCommentCount.classList.remove('hidden');
-  blockUploadingNewComments.classList.remove('hidden');
+
+  socialComments.innerHTML = '';
+
+  let counter = 0;
+
+  const onUploadingNewCommentsButtonClick = () => {
+    counter += OFFSET;
+
+    createCommentsFragment(bigImage.comments, counter);
+  };
 
   bigPictureImg.src = bigImage.url;
   likesCount.textContent = bigImage.likes;
   commentsCount.textContent = bigImage.comments.length;
   socialDescription.textContent = bigImage.description;
 
-  createCommentsFragment(bigImage.comments);
-  showNewComments(bigImage.comments);
+  createCommentsFragment(bigImage.comments, counter);
 
   document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureCancel.addEventListener('click', onBigPictureCancelClick);
+  blockUploadingNewComments.addEventListener('click', onUploadingNewCommentsButtonClick);
 };
 
 function onBigPictureEscPress(evt) {

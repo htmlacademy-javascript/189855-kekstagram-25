@@ -2,8 +2,6 @@ import { getRandomIntInclusive } from './util.js';
 import {titles, messages, names} from './data.js';
 
 const createDescription = (index) => {
-  const commentsCount = getRandomIntInclusive(1, 5);
-
   const getComment = (idx) => {
     const messageCount = getRandomIntInclusive(1, 2);
 
@@ -30,7 +28,7 @@ const createDescription = (index) => {
     };
   };
 
-  const getComments = () => {
+  const getComments = (commentsCount) => {
 
     const setMessages = [];
 
@@ -47,7 +45,7 @@ const createDescription = (index) => {
     url: `photos/${index}.jpg`,
     description: titles[getRandomIntInclusive(0, 3)],
     likes: getRandomIntInclusive(15, 200),
-    comments: getComments(getRandomIntInclusive(1, 5))
+    comments: getComments(getRandomIntInclusive(10, 20))
   };
 
   return objectTemplate;
