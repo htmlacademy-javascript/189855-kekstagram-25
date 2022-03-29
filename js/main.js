@@ -3,4 +3,3 @@ import activateFileLoader from './form.js';
 
 renderMini(descriptionObjects);
 activateFileLoader();
-
