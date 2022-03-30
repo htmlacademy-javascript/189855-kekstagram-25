@@ -2,64 +2,61 @@ const scaleControlSmallerButton = document.querySelector('.scale__control--small
 const scaleControlBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
+const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
 const STEP = 25;
 
+
+const onSmallerButton = () => {
+  scaleControlValue.value = scaleControlValue.value - STEP;
+
+  if (scaleControlValue.value === 0 || scaleControlValue.value === 100) {
+    scaleControlSmallerButton.disabled = true;
+  } else {
+    scaleControlSmallerButton.disabled = false;
+  }
+
+  imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
+};
+
 const addScaleControlSmallerButton = () => {
-  scaleControlSmallerButton.addEventListener('click', () => {
-    scaleControlValue.value = scaleControlValue.value - STEP;
-
-    if (scaleControlValue.value === 0 || scaleControlValue.value === 100) {
-      scaleControlSmallerButton.disabled = true;
-    } else {
-      scaleControlSmallerButton.disabled = false;
-    }
-
-    imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
-  });
+  scaleControlSmallerButton.addEventListener('click', onSmallerButton);
+  bigPictureCancel.addEventListener('click', onRemoveScaleControlSmallerButton);
+  addScaleControlBiggerButton();
 };
 
 const removeScaleControlSmallerButton = () => {
-  scaleControlSmallerButton.removeEventListener('click', () => {
-    scaleControlValue.value = scaleControlValue.value - STEP;
-
-    if (scaleControlValue.value === 0 || scaleControlValue.value === 100) {
-      scaleControlSmallerButton.disabled = true;
-    } else {
-      scaleControlSmallerButton.disabled = false;
-    }
-
-    imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
-  });
+  scaleControlSmallerButton.removeEventListener('click', onSmallerButton);
 };
 
-const addScaleControlBiggerButton = () => {
-  scaleControlBiggerButton.addEventListener('click', () => {
-    scaleControlValue.value = scaleControlValue.value + STEP;
+function onRemoveScaleControlSmallerButton() {
+  removeScaleControlSmallerButton();
+}
 
-    if (scaleControlValue.value === 100) {
-      scaleControlSmallerButton.disabled = true;
-    } else {
-      scaleControlSmallerButton.disabled = false;
-    }
+const onBiggerButton = () => {
+  scaleControlValue.value = scaleControlValue.value + STEP;
 
-    imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
-  });
+  if (scaleControlValue.value === 100) {
+    scaleControlSmallerButton.disabled = true;
+  } else {
+    scaleControlSmallerButton.disabled = false;
+  }
+
+  imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
 };
+
+function addScaleControlBiggerButton() {
+  scaleControlBiggerButton.addEventListener('click', onBiggerButton);
+  bigPictureCancel.addEventListener('click', onRemoveScaleControlBiggerButton);
+}
 
 const removeScaleControlBiggerButton = () => {
-  scaleControlBiggerButton.removeEventListener('click', () => {
-    scaleControlValue.value = scaleControlValue.value + STEP;
-
-    if (scaleControlValue.value === 100) {
-      scaleControlSmallerButton.disabled = true;
-    } else {
-      scaleControlSmallerButton.disabled = false;
-    }
-
-    imgUploadPreview.img.style.transform.scale = 0.`${scaleControlValue.value}`;
-  });
+  scaleControlBiggerButton.removeEventListener('click', onBiggerButton);
 };
+
+function onRemoveScaleControlBiggerButton() {
+  removeScaleControlBiggerButton();
+}
 
 // Наложение эффекта
 
@@ -104,3 +101,4 @@ sliderElement.noUiSlider.on('update', () => {
   effectLavelValue.value = sliderElement.noUiSlider.get();
 });
 
+export {addScaleControlSmallerButton};
