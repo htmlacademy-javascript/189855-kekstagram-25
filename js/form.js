@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { activateScaleControls, desactivateScaleControls } from './scale-img.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -85,6 +86,7 @@ const openEditFormModal = () => {
   hashtagsField.addEventListener('keydown', onTextFieldEscButtonPress);
   descriptionField.addEventListener('keydown', onTextFieldEscButtonPress);
   activateFormValidation();
+  activateScaleControls();
 };
 
 function closeEditFormModal() {
@@ -97,6 +99,7 @@ function closeEditFormModal() {
   hashtagsField.removeEventListener('keydown', onTextFieldEscButtonPress);
   descriptionField.removeEventListener('keydown', onTextFieldEscButtonPress);
   desactivateFormValidation();
+  desactivateScaleControls();
 
   uploadFileField.value = '';
 }
