@@ -2,6 +2,9 @@ const scaleControlSmallerButton = document.querySelector('.scale__control--small
 const scaleControlBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectValueElement = document.querySelector('.effect-level__value');
+const sliderFiedset = document.querySelector('.img-upload__effect-level');
 
 const STEP = 25;
 
@@ -31,6 +34,11 @@ const activateScaleControls = () => {
 const desactivateScaleControls = () => {
   scaleControlSmallerButton.removeEventListener('click', onScaleControlSmallerButtonClick);
   scaleControlBiggerButton.removeEventListener('click', onScaleControlBiggerButtonClick);
+};
+
+const resetScale = () => {
+  scaleControlValue.value = '100%';
+  imgUploadPreview.style.transform = 'scale(1)';
 };
 
 // // Наложение эффекта
@@ -102,22 +110,6 @@ const FILTERS_CONFIG = {
   },
 };
 
-const effects = [
-  'none',
-  'chrome',
-  'sepia',
-  'marvin',
-  'phobos',
-  'heat',
-];
-
-const effectsRadioButtons = document.querySelectorAll('.effects__radio');
-const effectsContainer = document.querySelector('.img-upload__effects');
-const sliderElement = document.querySelector('.effect-level__slider');
-const valueElement = document.querySelector('.effect-level__value');
-
-valueElement.value = 100;
-
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -126,59 +118,51 @@ noUiSlider.create(sliderElement, {
   start: 100,
   step: 1,
   connect: 'lower',
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
 });
 
 sliderElement.noUiSlider.on('update', () => {
-  valueElement.value = sliderElement.noUiSlider.get();
+  effectValueElement.value = sliderElement.noUiSlider.get();
 });
 
-effectsContainer.addEventListener('click', (evt) => {
-  effects.forEach((effect) => {
-    if (effect === evt.target.value) {
-      const effectListItem = document.querySelector('.effects__preview--' + chrome);
+const setOriginalEffect = () => {
+  imgUploadPreview.className = '';
+  imgUploadPreview.style.filter = 'none';
+  sliderFiedset.style.display = 'none';
+};
 
-      if (effectListItem) {
-        imgUploadPreview.classList.add(effectListItem);
-      }
+const setEffect = (value) => {
+  sliderFiedset.style.display = 'block';
 
-      for (let filter in FILTERS_CONFIG) {
-        if (filter.key === evt.target.value) {
-          sliderElement.noUiSlider.updateOptions({
-            return filter;
-          });
-        }
-      }
-    }
+  const currentConfig = FILTERS_CONFIG[value];
+
+  sliderElement.noUiSlider.updateOptions(currentConfig.options);
+
+  sliderElement.noUiSlider.on('update', (values, handle) => {
+    imgUploadPreview.style.filter = `${currentConfig.style}(${values[handle]}${currentConfig.unit})`;
+    effectValueElement.value = values[handle];
   });
-});
+};
 
-// effects.forEach((effect) => {
-//   const effectListItem = effectsContainer.querySelector('.effects__preview--' + effect);
+const onEffectButtonClick = (evt) => {
+  imgUploadPreview.className = '';
+  imgUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
 
-//   if (effectListItem) {
-//     imgUploadPreview('img').classList.add(effectListItem);
-//   }
-// });
+  if (evt.target.value === 'none') {
+    setOriginalEffect();
+  } else {
+    setEffect(evt.target.value);
+  }
+};
 
-// // Слайдер
-
-// const effectLavelValue = document.querySelector('.effect-level__value');
-// const sliderElement = document.querySelector('');
-
-// effectLavelValue.value = 100;
-
-// noUiSlider.create(sliderElement, {
-//   range: {
-//     min: 0,
-//     max: 100,
-//   },
-//   start: 100,
-//   step: 25,
-//   connect: 'lower',
-// });
-
-// sliderElement.noUiSlider.on('update', () => {
-//   effectLavelValue.value = sliderElement.noUiSlider.get();
-// });
-
-export {activateScaleControls, desactivateScaleControls};
+export {activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect};
