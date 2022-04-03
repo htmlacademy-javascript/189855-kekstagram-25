@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect } from './scale-img.js';
+import { showAlert } from './util.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -77,6 +78,35 @@ const onTextFieldEscButtonPress = (evt) => {
   evt.stopPropagation();
 };
 
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://25.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+          } else {
+            showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+          }
+        })
+        .catch(() => {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        });
+    }
+  });
+};
+
 const openEditFormModal = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -92,6 +122,7 @@ const openEditFormModal = () => {
   effectList.addEventListener('change', onEffectButtonClick);
   activateFormValidation();
   activateScaleControls();
+  setUserFormSubmit();
 };
 
 function closeEditFormModal() {
