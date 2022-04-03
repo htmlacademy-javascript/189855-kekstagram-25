@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect } from './scale-img.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -8,6 +9,7 @@ const form = document.querySelector('.img-upload__form');
 const uploadSubmitButton = form.querySelector('.img-upload__submit');
 const hashtagsField = form.querySelector('.text__hashtags');
 const descriptionField = form.querySelector('.text__description');
+const effectList = form.querySelector('.effects__list');
 
 const re = /^#[A-Za-zA-Яа-яЁё0-9]{1,19}$/;
 
@@ -79,12 +81,17 @@ const openEditFormModal = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
 
+  resetScale();
+  setOriginalEffect();
+
   document.addEventListener('keydown', onPopupEscButtonPress);
   uploadCancelButton.addEventListener('click', onUploadCuncelButtonClick);
   form.addEventListener('submit', onFormSubmit);
   hashtagsField.addEventListener('keydown', onTextFieldEscButtonPress);
   descriptionField.addEventListener('keydown', onTextFieldEscButtonPress);
+  effectList.addEventListener('change', onEffectButtonClick);
   activateFormValidation();
+  activateScaleControls();
 };
 
 function closeEditFormModal() {
@@ -96,7 +103,9 @@ function closeEditFormModal() {
   form.removeEventListener('submit', onFormSubmit);
   hashtagsField.removeEventListener('keydown', onTextFieldEscButtonPress);
   descriptionField.removeEventListener('keydown', onTextFieldEscButtonPress);
+  effectList.removeEventListener('change', onEffectButtonClick);
   desactivateFormValidation();
+  desactivateScaleControls();
 
   uploadFileField.value = '';
 }
