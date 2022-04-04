@@ -1,4 +1,3 @@
-//import {createDescription} from './create-description.js';
 import { openBigPicture } from './full-image.js';
 
 const photoMatchingTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -23,13 +22,5 @@ const renderMini = (photos) => {
   picturesListElement.appendChild(photoMatchingListFragment);
 };
 
-const descriptionObjects = [];
-const maxNumberDescriptions = 25;
-
-for (let i = 1; i <= maxNumberDescriptions; i++) {
-  const newDescriptionObject = fetch('https://25.javascript.pages.academy/kekstagram/data').then((response) => response.json()).then((descriptions) => {renderMini(descriptions);});
-  descriptionObjects.push(newDescriptionObject);
-}
-
-export {renderMini, descriptionObjects};
+export default renderMini;
 

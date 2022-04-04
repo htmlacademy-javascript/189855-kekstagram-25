@@ -1,12 +1,11 @@
-import {renderMini, descriptionObjects} from './rendering-mini.js';
-import activateFileLoader from './form.js';
+import renderMini from './rendering-mini.js';
+import {activateFileLoader} from './form.js';
+import {createLoader} from './api.js';
+import { errorMessage } from './messages.js';
 
-renderMini(descriptionObjects);
+const photoLoader = createLoader(renderMini, errorMessage);
+//setUserFormSubmit(closeEditFormModal);
+
+photoLoader();
 activateFileLoader();
-
-// fetch('https://25.javascript.pages.academy/kekstagram/data')
-//   .then((response) => response.json())
-//   .then((descriptions) => {
-//     renderMini(descriptions);
-//   });
 
