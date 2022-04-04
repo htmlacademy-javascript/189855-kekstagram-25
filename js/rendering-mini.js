@@ -24,9 +24,9 @@ const renderMini = (photos) => {
 };
 
 const descriptionObjects = [];
-const maxNumberDescriptions = 25;
+const MAX_NUMBER_DESCRIPTION = 25;
 
-for (let i = 1; i <= maxNumberDescriptions; i++) {
+for (let i = 1; i <= MAX_NUMBER_DESCRIPTION; i++) {
   const newDescriptionObject = createDescription(i);
   descriptionObjects.push(newDescriptionObject);
 }
