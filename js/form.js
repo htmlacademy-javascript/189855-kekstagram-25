@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect } from './scale-img.js';
-import { createSubmitData } from './api.js';
+import { sendData } from './api.js';
+import { openErrorMessage, openSuccessMessage } from './messages.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -72,12 +73,9 @@ const onUploadCuncelButtonClick = () => {
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    const formData = new FormData(evt.target);
-  }
+  const formData = new FormData(evt.target);
 
-  createSubmitData(onSuccess, onError, body);
+  sendData(closeEditFormModal, openSuccessMessage, openErrorMessage, formData);
 };
 
 const onTextFieldEscButtonPress = (evt) => {
@@ -125,4 +123,4 @@ const activateFileLoader = () => {
   uploadFileField.addEventListener('change', onUploadFileFieldChange);
 };
 
-export {activateFileLoader, pristine, closeEditFormModal};
+export {activateFileLoader, closeEditFormModal};

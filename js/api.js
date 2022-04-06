@@ -14,7 +14,7 @@ const createLoader = (onSuccess, onError) => () =>
       onError(err);
     });
 
-const createSubmitData = (onSuccess, onError, body) => {
+const sendData = (closeEditFormModal, onSuccess, onError, body) => {
   fetch(
     'https://25.javascript.pages.academy/kekstagram',
     {
@@ -24,6 +24,7 @@ const createSubmitData = (onSuccess, onError, body) => {
   )
     .then((response) => {
       if (response.ok) {
+        closeEditFormModal();
         onSuccess();
       } else {
         onError('Ошибка загрузки файла');
@@ -34,4 +35,4 @@ const createSubmitData = (onSuccess, onError, body) => {
     });
 };
 
-export {createLoader, createSubmitData};
+export {createLoader, sendData};
