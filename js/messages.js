@@ -18,28 +18,27 @@ const openErrorMessage = () => {
 
   const deleteErrorModal = () => {
     error.remove();
+    document.removeEventListener('keydown', onEscapeKeydown);
   };
 
-  const onEscapeErrorButtonClick = (evt) => {
+  function onEscapeKeydown (evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       deleteErrorModal();
-      document.removeEventListener('keydown', onEscapeErrorButtonClick);
     }
-  };
+  }
 
   errorButton.addEventListener('click', deleteErrorModal);
 
-  document.addEventListener('keydown', onEscapeErrorButtonClick);
+  document.addEventListener('keydown', onEscapeKeydown);
 
-  const emtyPointCloseErrorClick = (evt) => {
-    if(evt.target.closest('.success__inner') === null){
+  const emptyPointCloseErrorClick = (evt) => {
+    if(evt.target.closest('.error__inner') === null){
       deleteErrorModal();
-      error.removeEventListener('click', emtyPointCloseErrorClick);
     }
   };
 
-  error.addEventListener('click', emtyPointCloseErrorClick);
+  error.addEventListener('click', emptyPointCloseErrorClick);
 };
 
 const openSuccessMessage = () => {
@@ -58,24 +57,23 @@ const openSuccessMessage = () => {
 
   const deleteSuccessModal = () => {
     success.remove();
+    document.removeEventListener('keydown', onEscapeKeydown);
   };
 
-  const escapeSuccessButtonClick = (evt) => {
+  function onEscapeKeydown (evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       deleteSuccessModal();
-      document.removeEventListener('keydown', escapeSuccessButtonClick);
     }
-  };
+  }
 
   successButton.addEventListener('click', deleteSuccessModal);
 
-  document.addEventListener('keydown', escapeSuccessButtonClick);
+  document.addEventListener('keydown', onEscapeKeydown);
 
   const emtyPointCloseSuccessClick = (evt) => {
-    if(evt.target.closest('.success__inner') === null){
+    if(evt.target.closest('.success__inner') === null) {
       deleteSuccessModal();
-      success.removeEventListener('click', emtyPointCloseSuccessClick);
     }
   };
 
