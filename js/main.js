@@ -1,5 +1,10 @@
-import {renderMini, descriptionObjects} from './rendering-mini.js';
-import activateFileLoader from './form.js';
+import renderMini from './rendering-mini.js';
+import {activateFileLoader} from './form.js';
+import {createLoader} from './api.js';
+import { getServerDataError } from './messages.js';
 
-renderMini(descriptionObjects);
+const photoLoader = createLoader(renderMini, getServerDataError);
+
+photoLoader();
 activateFileLoader();
+

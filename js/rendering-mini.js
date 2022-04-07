@@ -1,4 +1,3 @@
-import {createDescription} from './create-description.js';
 import { openBigPicture } from './full-image.js';
 
 const photoMatchingTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -23,13 +22,4 @@ const renderMini = (photos) => {
   picturesListElement.appendChild(photoMatchingListFragment);
 };
 
-const descriptionObjects = [];
-const MAX_NUMBER_DESCRIPTION = 25;
-
-for (let i = 1; i <= MAX_NUMBER_DESCRIPTION; i++) {
-  const newDescriptionObject = createDescription(i);
-  descriptionObjects.push(newDescriptionObject);
-}
-
-export {renderMini, descriptionObjects};
-
+export default renderMini;

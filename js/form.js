@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect } from './scale-img.js';
+import { sendData } from './api.js';
+import { openErrorMessage, openSuccessMessage } from './messages.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -71,6 +73,9 @@ const onUploadCuncelButtonClick = () => {
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
+  const formData = new FormData(evt.target);
+
+  sendData(closeEditFormModal, openSuccessMessage, openErrorMessage, formData);
 };
 
 const onTextFieldEscButtonPress = (evt) => {
@@ -118,4 +123,4 @@ const activateFileLoader = () => {
   uploadFileField.addEventListener('change', onUploadFileFieldChange);
 };
 
-export default activateFileLoader;
+export {activateFileLoader, closeEditFormModal};
