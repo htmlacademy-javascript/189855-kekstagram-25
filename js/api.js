@@ -3,7 +3,7 @@ import photoLoader from './main.js';
 const filterDefaultButton = document.querySelector('.filter-default');
 const filterRandomButton = document.querySelector('.filter-random');
 const filterDiscussedButton = document.querySelector('.filter-discussed');
-const imgFiltersButtonActive = document.querySelector('.img-filters__button--active');
+const imgFiltersForm = document.querySelector('.img-filters__form');
 
 const createLoader = (onSuccess, onError) => () =>
   fetch('https://25.javascript.pages.academy/kekstagram/data')
@@ -47,17 +47,27 @@ const sendData = (closeEditFormModal, onSuccess, onError, body) => {
     });
 };
 
+imgFiltersForm.addEventListener('click', (evt) => {
+  for (let i = 0; i < imgFiltersForm.children.length; i++) {
+    imgFiltersForm.children[i].classList.remove('img-filters__button--active');
+  }
+  evt.target.classList.add('img-filters__button--active');
+});
+
+
 const openDefaultPhotos = () => {
   filterDefaultButton.addEventListener('click', () => {
     photoLoader();
   });
 };
 
+
 const openRandomPhotos = () => {
   filterRandomButton.addEventListener('click', () => {
 
   });
 };
+
 
 const openDiscussedPhotos = () => {
   filterDiscussedButton.addEventListener('click', () => {
