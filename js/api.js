@@ -1,9 +1,4 @@
-import photoLoader from './main.js';
-
-const filterDefaultButton = document.querySelector('.filter-default');
-const filterRandomButton = document.querySelector('.filter-random');
-const filterDiscussedButton = document.querySelector('.filter-discussed');
-const imgFiltersForm = document.querySelector('.img-filters__form');
+import { activateFilters } from './filters.js';
 
 const createLoader = (onSuccess, onError) => () =>
   fetch('https://25.javascript.pages.academy/kekstagram/data')
@@ -16,11 +11,7 @@ const createLoader = (onSuccess, onError) => () =>
     })
     .then((data) => {
       onSuccess(data);
-    })
-    .then(() => {
-      const imgFilters = document.querySelector('.img-filters');
-
-      imgFilters.classList.remove('img-filters--inactive');
+      activateFilters();
     })
     .catch((err) => {
       onError(err);
@@ -45,34 +36,6 @@ const sendData = (closeEditFormModal, onSuccess, onError, body) => {
     .catch(() => {
       onError('Ошибка загрузки файла');
     });
-};
-
-imgFiltersForm.addEventListener('click', (evt) => {
-  for (let i = 0; i < imgFiltersForm.children.length; i++) {
-    imgFiltersForm.children[i].classList.remove('img-filters__button--active');
-  }
-  evt.target.classList.add('img-filters__button--active');
-});
-
-
-const openDefaultPhotos = () => {
-  filterDefaultButton.addEventListener('click', () => {
-    photoLoader();
-  });
-};
-
-
-const openRandomPhotos = () => {
-  filterRandomButton.addEventListener('click', () => {
-
-  });
-};
-
-
-const openDiscussedPhotos = () => {
-  filterDiscussedButton.addEventListener('click', () => {
-
-  });
 };
 
 export {createLoader, sendData};

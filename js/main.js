@@ -7,6 +7,3 @@ const photoLoader = createLoader(renderMini, getServerDataError);
 
 photoLoader();
 activateFileLoader();
-
-export default photoLoader;
-
