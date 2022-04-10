@@ -10,8 +10,6 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-getRandomIntInclusive(10, 1);
-
 const findLongestWord = (str, maxLength) => {
   if (str.length <= maxLength) {
     return true;
@@ -28,4 +26,14 @@ const isEnterKey = function (evt) {
   return evt.key === 'Enter';
 };
 
-export {getRandomIntInclusive, findLongestWord, isEscapeKey, isEnterKey};
+
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomIntInclusive, findLongestWord, isEscapeKey, isEnterKey, debounce};

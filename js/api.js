@@ -11,7 +11,7 @@ const createLoader = (onSuccess, onError) => () =>
     })
     .then((data) => {
       onSuccess(data);
-      activateFilters();
+      activateFilters(data);
     })
     .catch((err) => {
       onError(err);
