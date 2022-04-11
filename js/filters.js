@@ -3,6 +3,8 @@ import { debounce } from './util.js';
 import { getRandomIntInclusive } from './util.js';
 
 const DELAY = 500;
+const RANDOM_IMAGES_COUNT = 10;
+const PICTURE_COUNT = 24;
 
 const imgFiltersForm = document.querySelector('.img-filters__form');
 const imgFiltersPanel = document.querySelector('.img-filters');
@@ -22,13 +24,17 @@ const getRandomImages = (images) => {
   images.slice();
 
   const uniqueImages = [];
-  const imageCount = 10;
 
-  for (let i = 1; i <= imageCount; i++) {
-    const imageVariates = getRandomIntInclusive(10, 10);
-    const objectImage = images[imageVariates];
-    uniqueImages.push(objectImage);
+  while (uniqueImages.length < RANDOM_IMAGES_COUNT) {
+    const imageIndex = getRandomIntInclusive(0, PICTURE_COUNT);
+    const image = images[imageIndex];
+
+    if (!uniqueImages.some((item) => item.id === image.id)) {
+      uniqueImages.push(image);
+    }
   }
+
+  return uniqueImages;
 };
 
 const getDiscussedImages = (images) => images.slice().sort((item1, item2) => item2.comments.length - item1.comments.length);

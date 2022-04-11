@@ -55,12 +55,12 @@ const openBigPicture = (bigImage) => {
 
   socialComments.innerHTML = '';
 
-  let counter = 0;
+  let COUNTER = 0;
 
   const onUploadingNewCommentsButtonClick = () => {
-    counter += OFFSET;
+    COUNTER += OFFSET;
 
-    createCommentsFragment(bigImage.comments, counter);
+    createCommentsFragment(bigImage.comments, COUNTER);
   };
 
   bigPictureImg.src = bigImage.url;
@@ -68,7 +68,7 @@ const openBigPicture = (bigImage) => {
   commentsCount.textContent = bigImage.comments.length;
   socialDescription.textContent = bigImage.description;
 
-  createCommentsFragment(bigImage.comments, counter);
+  createCommentsFragment(bigImage.comments, COUNTER);
 
   document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureCancel.addEventListener('click', onBigPictureCancelClick);

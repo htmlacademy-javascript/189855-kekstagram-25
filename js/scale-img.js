@@ -41,8 +41,6 @@ const resetScale = () => {
   imgUploadPreview.style.transform = 'scale(1)';
 };
 
-// // Наложение эффекта
-
 const FILTERS_CONFIG = {
   chrome: {
     options: {
