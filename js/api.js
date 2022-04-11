@@ -1,3 +1,5 @@
+import { activateFilters } from './filters.js';
+
 const createLoader = (onSuccess, onError) => () =>
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => {
@@ -9,6 +11,7 @@ const createLoader = (onSuccess, onError) => () =>
     })
     .then((data) => {
       onSuccess(data);
+      activateFilters(data);
     })
     .catch((err) => {
       onError(err);

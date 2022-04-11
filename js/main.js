@@ -7,4 +7,3 @@ const photoLoader = createLoader(renderMini, getServerDataError);
 
 photoLoader();
 activateFileLoader();
-
