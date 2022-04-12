@@ -18,14 +18,7 @@ const findLongestWord = (str, maxLength) => {
   return false;
 };
 
-const isEscapeKey = function (evt) {
-  return evt.key === 'Escape';
-};
-
-const isEnterKey = function (evt) {
-  return evt.key === 'Enter';
-};
-
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
@@ -36,4 +29,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomIntInclusive, findLongestWord, isEscapeKey, isEnterKey, debounce};
+export {getRandomIntInclusive, findLongestWord, isEscapeKey, debounce};

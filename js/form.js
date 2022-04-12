@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 import { activateScaleControls, desactivateScaleControls, resetScale, onEffectButtonClick, setOriginalEffect } from './scale-img.js';
 import { sendData } from './api.js';
 import { openErrorMessage, openSuccessMessage } from './messages.js';
+import { activateUniqueImage } from './photo.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -121,6 +122,7 @@ const onUploadFileFieldChange = () => {
 
 const activateFileLoader = () => {
   uploadFileField.addEventListener('change', onUploadFileFieldChange);
+  activateUniqueImage();
 };
 
 export {activateFileLoader, closeEditFormModal};
